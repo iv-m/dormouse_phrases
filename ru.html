@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Фразы Сони -- русский вариант</title>
+    <style>
+      body, h3 {
+        font-family: "PT Serif", Palatino, serif;
+      }
+      .container {
+        max-width: 968px;
+        margin: auto;
+      }
+      .control {
+        border: 1px solid #aaa;
+        border-radius: .5em;
+        outline: none;
+        resize: none;
+      }
+      select {
+        padding: .3em;
+        margin-right: 10px;
+      }
+      textarea {
+        width: 900px;
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+      #phrase {
+        font-size: 200%;
+        background-color: #eee;
+        padding: 1em;
+        border-radius: .5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p id="phrase">Включи javascript!</p>
+      <p>Союз:
+      <select class="control" id="conjunction" onchange="ph.refresh()">
+        <option value=", пока ">пока</option>
+        <option value=", если ">если</option>
+        <option value=" то, что ">то, что</option>
+      </select>
+      <button onclick="ph.next()">Другая фраза</button>
+      </p>
+      <h3>Слова, слова...</h3>
+      <textarea id="words" rows="30" class="control">
+балдею
+волнуюсь
+восхищаю
+вру
+деградирую
+дышу
+ем
+живу
+играю
+иду
+колю
+краду
+лаю
+лепечу
+лечу
+люблю людей
+молюсь
+несу чушь
+ношу
+ору
+отдыхаю
+перевариваю
+пишу
+плыву
+полю
+пошлю
+пою
+пью
+выпиваю
+облагораживаю
+трансцендентирую
+сочиняю
+сплю
+строю
+пинаю
+схожу с ума
+удивляюсь
+улетаю на юг
+учусь
+фантазирую
+хожу
+шагаю
+шучу
+      </textarea>
+    </div>
+    <script lang="javascript">
+      var ph = (function (d) {
+        var phrase = d.getElementById("phrase");
+        var conjunction = d.getElementById("conjunction");
+        var words = d.getElementById("words");
+        var ph = {
+          word1: "дышу",
+          word2: "ем",
+          refresh: function () {
+            var cc = conjunction.value;
+            phrase.innerHTML = "Так ты еще скажешь, будто «Я " + 
+              ph.word1 + cc + ph.word2 + 
+              "» и «Я " + ph.word2 + cc + ph.word1 + 
+              "», &mdash; одно и то же!";
+          }
+        };
+        ph.next = function () {
+          var ww = words.value.trim().split(/\r?\n/).filter(Boolean);
+          var idx1 = Math.floor(Math.random()*ww.length);
+          var idx2 = Math.floor(Math.random()*ww.length);
+          if (idx1 === idx2) {
+            idx2 = (idx1 + 1) % ww.length;
+          }
+          this.word1 = ww[idx1].trim();
+          this.word2 = ww[idx2].trim();
+          this.refresh();
+        }
+        return ph;
+      })(document);
+      ph.next();
+    </script>
+  </body>
+</html>
+
+
